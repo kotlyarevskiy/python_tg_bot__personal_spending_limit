@@ -33,8 +33,8 @@ class User:
         
     def get_user_list(self):
         with self.connection:
-            result = self.cursor.execute("SELECT * FROM `users` WHERE `user_id`= ?", (user_id,)).fetchall()
-            return result
+            result = self.cursor.execute("SELECT * FROM `users`").fetchall()    
+            return [self.result_to_dict(row, self.cursor) for row in result]
 
     def set_signup(self, user_id, signup):
         with self.connection:

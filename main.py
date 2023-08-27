@@ -206,18 +206,14 @@ async def get_user_list(callback_query: types.CallbackQuery):
         await bot.send_message(user_id, str(User.message_if_not_admin.replace("%s", user_info["nickname"])))   
         return    
  
-
-    data = [
-        ["Иванов", 30, "Москва"],
-        ["Петров", 25, "Санкт-Петербург"],
-        ["Сидоров", 35, "Казань"],
-    ]
+    user_list = user.get_user_list()
+ 
 
     table_md = "```\n"
-    table_md += "Имя      | Возраст | Город         \n"
-    table_md += "---------|---------|--------------\n"
-    for row in data:
-        table_md += f"{row[0]:<9}| {row[1]:<6}  | {row[2]:<13}\n"
+    table_md += "Ім'я          | Реєстр. | Заблок. \n"
+    table_md += "--------------|---------|---------\n"
+    for row in user_list:
+        table_md += f"{row['nickname']:<14}| {row['signup']:<6}  | {row['blocked']:<9}\n"
     table_md += "```"
 
     await bot.send_message(user_id, table_md, parse_mode=types.ParseMode.MARKDOWN, disable_notification=True)
